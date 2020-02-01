@@ -144,7 +144,7 @@ USE_TZ = False
 
 
 #配置文件上传路径
-MEDIA_URL = '/uploads/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_URL = "/upload/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "upload")
 
 APPEND_SLASH = False

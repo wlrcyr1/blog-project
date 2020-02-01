@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^login', views.login),
     url(r'^logout', views.logout),
     url(r'^reg', views.reg),
-    url(r"^uploads/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT, }),
+    url(r'^uploads/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT, }),
     #富文本编辑器图片上传
     url(r'^admin/upload/(?P<dir_name>[^/]+)$', upload_image, name='upload_image'),
 ]

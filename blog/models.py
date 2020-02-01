@@ -11,7 +11,7 @@ class UserInfo(models.Model):
     password = models.CharField(verbose_name='密码', max_length=64)
     nickname = models.CharField(verbose_name='昵称', max_length=32, null=True, blank=True)
     email = models.EmailField(verbose_name='邮箱', unique=True, null=True, blank=True)
-    avatar = models.ImageField(verbose_name='头像', null=True, blank=True, upload_to='./upload/avatar/')
+    avatar = models.ImageField(verbose_name='头像', null=True, blank=True, upload_to='avatar')
 
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
