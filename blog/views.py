@@ -1,3 +1,4 @@
+# -*-coding:utf-8-*-
 from django.shortcuts import render, HttpResponse, redirect
 from blog import models
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
