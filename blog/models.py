@@ -31,25 +31,6 @@ class UserInfo(models.Model):
         ordering = ['-nid']
 
 
-class Blog(models.Model):
-    """
-    博客信息
-    """
-    nid = models.BigAutoField(primary_key=True)
-    title = models.CharField(verbose_name='个人博客标题', max_length=64)
-    site = models.CharField(verbose_name='个人博客前缀', max_length=32, unique=True)
-    theme = models.CharField(verbose_name='博客主题', max_length=32)
-    user = models.OneToOneField(to='UserInfo', to_field='nid', on_delete=models.CASCADE)
-
-    '''print的时候显示'''
-    def __str__(self):
-        return self.site
-
-    class Meta:
-        verbose_name = '博客信息'  # 这个让后台显示我们自定的表名
-        verbose_name_plural = verbose_name  # 因为是外国人设计的，如果不写这个会在名字后面跟一个s
-        ordering = ['-nid']
-
 
 class UserFans(models.Model):
     """
@@ -74,12 +55,11 @@ class UserFans(models.Model):
 
 class Category(models.Model):
     """
-    博主个人文章分类表
+    文章分类表
     """
     nid = models.AutoField(primary_key=True)
-    title = models.CharField(verbose_name='分类标题', max_length=32)
-
-    blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='nid', on_delete=models.CASCADE)
+    title = models.CharField(verbose_name='分类标题', max_length=128)
+    index = models.IntegerField(verbose_name='分类排序', default=0)
 
     def __str__(self):
         return self.title
@@ -88,19 +68,6 @@ class Category(models.Model):
         verbose_name = '文章分类表'  # 这个让后台显示我们自定的表名
         verbose_name_plural = verbose_name  # 因为是外国人设计的，如果不写这个会在名字后面跟一个s
         ordering = ['-nid']
-
-
-class ArticleDetail(models.Model):
-    """
-    文章详细表
-    """
-    content = models.TextField(verbose_name='文章内容')
-    article = models.OneToOneField(verbose_name='所属文章', to='Article', to_field='nid', on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = '文章详细表'  # 这个让后台显示我们自定的表名
-        verbose_name_plural = verbose_name  # 因为是外国人设计的，如果不写这个会在名字后面跟一个s
-        ordering = ['-id']
 
 
 class UpDown(models.Model):
@@ -139,7 +106,6 @@ class Comment(models.Model):
 class Tag(models.Model):
     nid = models.AutoField(primary_key=True)
     title = models.CharField(verbose_name='标签名称', max_length=32)
-    blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='nid', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -153,6 +119,7 @@ class Tag(models.Model):
 class Article(models.Model):
     nid = models.BigAutoField(primary_key=True)
     title = models.CharField(verbose_name='文章标题', max_length=128)
+    content = models.TextField(verbose_name='文章内容', blank=True, null=True)
     summary = models.CharField(verbose_name='文章简介', max_length=255)
     read_count = models.IntegerField(verbose_name='阅读次数', default=0)
     comment_count = models.IntegerField(verbose_name='评论次数', default=0)
@@ -160,7 +127,6 @@ class Article(models.Model):
     #down_count = models.IntegerField(default=0)
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
 
-    blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='nid', on_delete=models.CASCADE)
     category = models.ForeignKey(verbose_name='文章类型', to='Category', to_field='nid',
                                  null=True, on_delete=models.CASCADE)
 
@@ -182,6 +148,7 @@ class Article(models.Model):
         verbose_name = '文章'  # 这个让后台显示我们自定的表名
         verbose_name_plural = verbose_name  # 因为是外国人设计的，如果不写这个会在名字后面跟一个s
         ordering = ['-nid']
+
 
 class Article2Tag(models.Model):
     article = models.ForeignKey(verbose_name='文章', to="Article", to_field='nid', on_delete=models.CASCADE)

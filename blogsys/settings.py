@@ -133,3 +133,18 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+# cms/settings.py
+# 指定Django语言为中文
+LANGUAGE_CODE = 'zh-Hans'
+# 指定时区
+TIME_ZONE = 'PRC'
+# 改为False, 存入数据库的时间才正常, 否则会比正常时间少八个小时
+USE_TZ = False
+
+
+#配置文件上传路径
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
+APPEND_SLASH = False

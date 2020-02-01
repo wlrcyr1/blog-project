@@ -1,3 +1,4 @@
+# -*-coding:utf-8-*-
 """blogsys URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -15,7 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
 from blog import views
+from django.views.static import serve
+from blog.upload import upload_image
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,4 +31,7 @@ urlpatterns = [
     url(r'^login', views.login),
     url(r'^logout', views.logout),
     url(r'^reg', views.reg),
+    url(r"^uploads/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT, }),
+    #富文本编辑器图片上传
+    url(r'^admin/upload/(?P<dir_name>[^/]+)$', upload_image, name='upload_image'),
 ]
